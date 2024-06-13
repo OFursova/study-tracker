@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Item;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
@@ -15,7 +17,10 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class ListItems extends Component implements HasTable, HasForms
@@ -60,7 +65,14 @@ class ListItems extends Component implements HasTable, HasForms
                     ->relationship('category', 'name')
             ])
             ->headerActions([
+                BulkAction::make('get_report')
+                    ->modalContent(fn (Collection $records): View => view(
+                        'filament.pages.actions.report',
+                        ['records' => $records->groupBy('category.name')]
+                    ))
+                    ->deselectRecordsAfterCompletion(),
                 CreateAction::make()
+                    ->color('success')
                     ->slideOver()
                     ->model(Item::class)
                     ->form(ItemForm::schema()),
@@ -72,6 +84,7 @@ class ListItems extends Component implements HasTable, HasForms
                 DeleteAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
-            ->striped();
+            ->striped()
+            ->paginated([25, 50, 100, 'all']);
     }
 }
