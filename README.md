@@ -1,8 +1,6 @@
-<p align="center"><img src="https://github.com/OFursova/study-tracker/blob/main/public/study_tracker.png" width="400" alt="Study Tracker Logo"></p>
+<p align="center"><img src="https://github.com/OFursova/study-tracker/blob/main/public/study_tracker.png" width="200" alt="Study Tracker Logo"></p>
 
-# Study Tracker
-
-Study Tracker is a web application built with Laravel and Filament. It is designed to help users store, categorize, and structure the items they have learned. The application allows users to filter and search for items by title, topic, or category and generate reports of learned items over a selected period.
+**Study Tracker** is a web application built with Laravel and Filament. It is designed to help users store, categorize, and structure the items they have learned. The application allows users to filter and search for items by title, topic, or category and generate reports of learned items over a selected period.
 
 ## Features
 

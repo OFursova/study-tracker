@@ -21,7 +21,7 @@ final class ItemForm
             TextInput::make('url')
                 ->prefix('https://')
                 ->nullable()
-                ->url()
+                //->url()
                 ->suffixIcon('heroicon-m-globe-alt'),
             DateTimePicker::make('created_at')
                 ->hiddenOn('create'),
