@@ -14,13 +14,9 @@
 - Composer
 - Node.js and npm
 - Sqlite is used, but you can switch to MySQL 
-- App can be launched as native app (powered by Native PHP)
+- I have planned to build this app as Filament + NativePHP, but unfortunately they are not compatible due to lacking of [intl extension in php binaries](https://github.com/orgs/NativePHP/discussions/292)
 
 ## Installation
-
-Download the executable compatible with your OS (currently Linux and Windows) and launch it.
-
-### Instructions if you want to run this app in browser:
 
 1. Clone the repository:
 ```bash
@@ -59,8 +55,6 @@ npm run build
 ```
 9. Serve the application:
 ```bash
-php artisan native:serve 
-or
 php artisan serve
 ```
 10. Access the application:
