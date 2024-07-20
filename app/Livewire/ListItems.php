@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Forms\ItemForm;
 use App\Models\Item;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Support\Colors\Color;
@@ -14,11 +15,14 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -71,6 +75,24 @@ class ListItems extends Component implements HasTable, HasForms
                     ->relationship('category', 'name'),
                 SelectFilter::make('topic')
                     ->relationship('topics', 'name'),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('date'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['date'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        if (! $data['date']) {
+                            return null;
+                        }
+
+                        return 'Created at ' . Carbon::parse($data['date'])->toFormattedDateString();
+                    }),
                 QueryBuilder::make()
                     ->constraints([
                         DateConstraint::make('created_at'),
