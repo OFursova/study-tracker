@@ -49,7 +49,7 @@ final class ItemForm
                                 ->notRegex('/&lt;|&gt;|&nbsp;|&amp;|[<>=]+/'),
                         ]),
                     DateTimePicker::make('created_at')
-                        ->hiddenOn('create'),
+                        ->default(now()),
                     CheckboxList::make('topics')
                         ->relationship(
                             name: 'topics',
